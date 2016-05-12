@@ -1,0 +1,79 @@
+﻿<!doctype html>
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">  
+   function translate() {
+   document.getElementById('trans').innerHTML="";
+   var text= document.getElementById('ori').value;
+   window.mycallback = function(response) {
+   document.getElementById('trans').innerHTML=response;
+   }
+ 
+   var languageFrom = document.getElementById("langpairFROM").value;
+   var languageTo = document.getElementById("langpairTO").value;
+   var s = document.createElement("script");
+   s.src = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate?oncomplete=mycallback&appId=68D088969D79A8B23AF8585CC83EBA2A05A97651&from=" + languageFrom + "&to=" + languageTo + "&text=" + text;
+document.getElementsByTagName("head")[0].appendChild(s);
+   }
+</script>
+     
+ 
+</head>
+ 
+<body>
+ 
+ 
+ 
+<label><font size="5" color="black">Translate From:</font></label> 
+<select id="langpairFROM" STYLE=" font-size : 16pt">
+
+  <option value="de">German</option>
+  <option value="en">English</option>
+  <option value="ru">Russian</option>    
+  <option value="hi">Hindi</option> 
+  <option value="ko">Korean</option> 
+  <option value="ja">Japanese</option> 
+  <option value="fr">French</option>  
+  <option value="el">Greek</option> 
+  <option value="it">Italian</option> 
+  <option value="es">Spanish</option> 
+  <option value="ta">Tamil</option>
+  <option value="ur">Urdu</option>
+    
+                                         
+</select>
+<label><font size="5" color="black">Translate To:</font></label>
+<select id="langpairTO" STYLE=" font-size : 16pt">
+  
+  <option value="ru">Russian</option>
+  <option value="de">German</option>
+  <option value="en">English</option>  
+  <option value="hi">Hindi</option> 
+  <option value="ko">Korean</option> 
+  <option value="ja">Japanese</option> 
+  <option value="fr">French</option> 
+  <option value="el">Greek</option>
+  <option value="it">Italian</option>
+  <option value="es">Spanish</option> 
+  <option value="ta">Tamil</option>
+  <option value="ur">Urdu</option> 
+       
+</select>
+
+<button   onclick="translate()" >Translate </button> <br><br>
+ 
+<div >
+  <label><font size="5" color="black"> Entered Text:</font></label>
+  <textarea id="ori" name="translate" ></textarea> 
+</div><br>
+ 
+<div id="translationField">
+    <label><font size="5" color="black">Translated Text:</font></label>
+  <textarea id="trans" ></textarea> 
+</div>
+    <img src="translate.png" alt="Translator">
+ 
+</body> 
+ 
+</html> 

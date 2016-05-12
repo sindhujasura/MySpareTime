@@ -1,0 +1,39 @@
+﻿@{      
+    if (IsPost) {
+        string location = Request["location"];
+        string when = Request["when"];
+        if (@location != "" && @when != "") {
+            string uri = "http://eventful.com/events?q=music&l=" + @location + "&t=" + @when;
+            Response.Redirect(uri);
+        } 
+    }
+}
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+    </head>
+    <body>
+        <form action="" method="post">
+    <fieldset style="width: 500px">
+        <legend> <b> A lot can happen just by entering your interests !!</b></legend>
+        <div>
+            <label for="Where">Where</label>
+            <input type="text" name="location" value="" />
+        </div>
+        <div>
+            <label for="whenTime">When</label>
+            <input type="text" name="when" value="" />                
+        </div>
+        <div>
+            <label>&nbsp;</label>
+            <input type="submit" value="Submit" class="submit" />
+        </div>
+    </fieldset>
+</form>
+    </body>
+</html>

@@ -1,0 +1,43 @@
+﻿@using System.Xml;
+@using System.IO;
+@using System.Text;
+@{   
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "The Most Viewed NY Times Stories";
+    string uri = "http://www.nytimes.com/";
+    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://www.nytimes.com/");     
+    WebResponse response = request.GetResponse();
+    Stream strm = response.GetResponseStream();
+    XmlTextReader reader = new XmlTextReader(strm); 
+    Response.Redirect(uri);
+}
+   <div id="topStories" >
+    @{
+        string url = String.Empty;
+        string author = String.Empty;
+        string title = String.Empty;
+        string summary = String.Empty;
+        int itemDepth = 0;
+
+    while (reader.Read()){
+        if (reader.Name == "result") {
+            itemDepth = reader.Depth;
+            reader.Read();
+             while(reader.Depth != itemDepth) {  
+                if(reader.Name == "url") {
+                    url = reader.ReadString();
+                } else if(reader.Name == "byline") {
+                    author = reader.ReadString();
+                } else if(reader.Name == "title") {
+                    title = reader.ReadString();
+                } else if (reader.Name == "abstract") {
+                    summary = reader.ReadString();
+                }
+                reader.Read();        
+            }
+           <p><a href="@url">@title</a><br />@summary<br /><i>@author</i></p>
+        }
+    }
+    response.Close();
+} 
+   </div>

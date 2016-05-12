@@ -1,0 +1,61 @@
+﻿
+@using System.Xml;
+@using System.IO;
+@using System.Text;
+@{
+ 
+string uri ="http://api.remix.bestbuy.com/v1/products(sku in(9169336, 9154107, 1551069))?apiKey=5gwep99fu4bzhyb7sk63fzed";
+HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);     
+WebResponse response = request.GetResponse();
+Stream strm = response.GetResponseStream();
+XmlTextReader reader = new XmlTextReader(strm); 
+   string name = String.Empty;
+    string regularPrice = String.Empty;
+    string salePrice = String.Empty;
+    string urlLink = String.Empty;
+    string imageURL = String.Empty;
+    int itemDepth = 0;
+    while (reader.Read()){
+        if (reader.Name == "product") {
+            itemDepth = reader.Depth;
+            reader.Read();
+            while(reader.Depth != itemDepth) {
+                if(reader.Name == "categoryPath") {
+                    reader.Skip();
+                } else if (reader.Name == "name") {
+                    name = reader.ReadString();
+                }else if(reader.Name == "regularPrice") {
+                    regularPrice = reader.ReadString();
+                } else if (reader.Name == "salePrice") {
+                    salePrice = reader.ReadString();
+                } else if (reader.Name == "url") {
+                    urlLink = reader.ReadString();
+                } else if (reader.Name == "image") {
+                    imageURL = reader.ReadString();
+                } 
+                reader.Read();     
+            }
+               
+         
+                  
+                 <ul id="products">
+                     
+ 
+ 
+                <li style="float: left; margin: 5px; width: 200px;">
+                    <div class="productInfo">
+                        <h4><a href="@urlLink">@name</a></h4>
+                        <img src="@imageURL" alt="Image of @name" />
+                        <p class="description"><b>Sale Price:</b> $@salePrice<br /><b>Regular Price:</b> $@regularPrice </p>
+ 
+                    </div>
+                </li> 
+            </ul>
+ 
+            
+            }
+    }
+    response.Close();
+} 
+ 
+ 
